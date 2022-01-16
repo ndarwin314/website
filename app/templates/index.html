@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Flask app</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    </head>
+    <body >
+        <form action="/" method = "POST">
+            <p>
+                Current Pity:
+                <input type=number name="pity" id="pity" min="0" max="90" value={{pity}}>
+            </p>
+            <p>
+                Guarantee:
+                <select name="guarantee">
+                    {% if guarantee=="1" %}
+                    <option value="1" selected> 50/50</option>
+                    <option value="2"> Guarantee</option>
+                    {% else %}
+                    <option value="1"> 50/50</option>
+                    <option value="2" selected> Guarantee</option>
+                    {% endif %}
+                </select>
+            </p>
+            <p>
+                Number of Primogems:
+                <input type=number id="primo" name="primo" min="0" maxlength="6" value={{primo}}>
+            </p>
+            <p>
+                Number of Acquaint Fate:
+                <input type=number name="acquaint" id="acquaint" min="0" maxlength="6" value={{acquaint}}>
+            </p>
+            <p><input type = "submit" value = "Submit" /></p>
+        </form>
+        {% block content %}{% endblock %}
+
+    </body>
+
+</html>
