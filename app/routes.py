@@ -56,15 +56,18 @@ def deterministic(constellations=0, wishes=0, guarantee=False, pity=0):
     if not guarantee:
         for i in range(1, 90-pity):
             fullPDF[i:i+91] += basePDF[i]*basePDF
+        fullPDF /= 2
     #fullPDF = basePDF if guarantee else doublePDF
     for i in range(cons):
         fullPDF = np.convolve(fullPDF, doublePDF)
+    print(len(fullPDF), wishes)
     maxValue = fullPDF.max(initial=0)
-    if wishes >= fullPDF.size - 1:
+    if wishes >= len(fullPDF) - 1:
         return 1
     return fullPDF.cumsum()[wishes]
-
 def bin_search(value, array):
     return bisect.bisect_left(array, value)
+
+
 
 
