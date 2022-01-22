@@ -50,17 +50,16 @@ def deterministic(constellations=0, wishes=0, guarantee=False, pity=0):
         doublePDF[i:i+91] += basePDF[i]*basePDF
     doublePDF *= 0.5
     fullPDF = np.zeros((181-pity-90*guarantee,))
-    for i in range(91-pity):
-        fullPDF[i] = np.prod(temp[pity+1:i+pity]) * base[i+pity]
     fullPDF[0] = 0
+    for i in range(1, 91-pity):
+        fullPDF[i] = np.prod(temp[pity:i+pity]) * base[i+pity]
     if not guarantee:
         for i in range(1, 90-pity):
             fullPDF[i:i+91] += basePDF[i]*basePDF
-        fullPDF /= 2
+        fullPDF /= fullPDF.cumsum()[-1]
     #fullPDF = basePDF if guarantee else doublePDF
     for i in range(cons):
         fullPDF = np.convolve(fullPDF, doublePDF)
-    print(len(fullPDF), wishes)
     maxValue = fullPDF.max(initial=0)
     if wishes >= len(fullPDF) - 1:
         return 1
