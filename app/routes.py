@@ -48,25 +48,26 @@ def deterministic(constellations=0, wishes=0, guarantee=False, pity=0):
     doublePDF[0:91] += basePDF
     for i in range(1, 90):
         doublePDF[i:i + 91] += basePDF[i] * basePDF
-    doublePDF *= 0.5
+    doublePDF /= 2
+    pityPDF = np.zeros((91 - pity - 90 * guarantee,))
     fullPDF = np.zeros((181 - pity - 90 * guarantee,))
-    fullPDF[0] = 0
+    pityPDF[0] = 0
     for i in range(1, 91 - pity):
-        fullPDF[i] = np.prod(temp[pity + 1:i + pity]) * base[i + pity]
+        pityPDF[i] = np.prod(temp[pity + 1:i + pity]) * base[i + pity]
+    fullPDF[0:91 - pity] = pityPDF
     if not guarantee:
-        for i in range(0, 90 - pity):
-            fullPDF[i:i + 91] += fullPDF[i] * basePDF
-        # this just be a divide by 2 but some math si slightly wrong and idk why and this should more or less fix it
-        fullPDF /= fullPDF.cumsum()[-1]
-    # fullPDF = np.convolve(fullPDF, basePDF)
+        for i in range(1, 90 - pity):
+            fullPDF[i:i + 91] += pityPDF[i] * basePDF
+        fullPDF /= 2
 
     # fullPDF = basePDF if guarantee else doublePDF
     for i in range(cons):
         fullPDF = np.convolve(fullPDF, doublePDF)
-    maxValue = fullPDF.max(initial=0)
     if wishes >= len(fullPDF) - 1:
         return 1
     return fullPDF.cumsum()[wishes]
+
+
 def bin_search(value, array):
     return bisect.bisect_left(array, value)
 
