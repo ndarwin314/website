@@ -49,7 +49,7 @@ def deterministic(constellations=0, wishes=0, guarantee=False, pity=0):
     for i in range(1, 90):
         doublePDF[i:i + 91] += basePDF[i] * basePDF
     doublePDF /= 2
-    pityPDF = np.zeros((91 - pity - 90 * guarantee,))
+    pityPDF = np.zeros((91 - pity,))
     fullPDF = np.zeros((181 - pity - 90 * guarantee,))
     pityPDF[0] = 0
     for i in range(1, 91 - pity):
