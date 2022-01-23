@@ -65,7 +65,7 @@ def deterministic(constellations=0, wishes=0, guarantee=False, pity=0):
         fullPDF = np.convolve(fullPDF, doublePDF)
     if wishes >= len(fullPDF) - 1:
         return 1
-    return fullPDF.cumsum()[wishes]
+    return f"{100*fullPDF.cumsum()[wishes]:.2f}"
 
 
 def bin_search(value, array):
