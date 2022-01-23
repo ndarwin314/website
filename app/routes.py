@@ -64,7 +64,7 @@ def deterministic(constellations=0, wishes=0, guarantee=False, pity=0):
     for i in range(cons):
         fullPDF = np.convolve(fullPDF, doublePDF)
     if wishes >= len(fullPDF) - 1:
-        return 1
+        return 100
     return f"{100*fullPDF.cumsum()[wishes]:.2f}"
 
 
