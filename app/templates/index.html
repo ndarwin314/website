@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>Flask app</title>
+        <title>mathboi</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     </head>
     <body >
@@ -13,12 +13,12 @@
             <p>
                 Guarantee:
                 <select name="guarantee">
-                    {% if guarantee=="1" %}
-                    <option value="1" selected> 50/50</option>
-                    <option value="2"> Guarantee</option>
+                    {% if guarantee=="False" %}
+                    <option value="False" selected> 50/50</option>
+                    <option value="True"> Guarantee</option>
                     {% else %}
-                    <option value="1"> 50/50</option>
-                    <option value="2" selected> Guarantee</option>
+                    <option value="False"> 50/50</option>
+                    <option value="True" selected> Guarantee</option>
                     {% endif %}
                 </select>
             </p>
@@ -28,12 +28,13 @@
             </p>
             <p>
                 Number of Intertwined Fate:
-                <input type=number name="acquaint" id="acquaint" min="0" maxlength="6" value={{acquaint}}>
+                <input type=number name="fate" id="fate" min="0" maxlength="6" value={{fate}}>
             </p>
             <p><input type = "submit" value = "Submit" /></p>
         </form>
         {% block content %}{% endblock %}
 
+    <script src="{{ url_for('static', filename='jquery.js') }}"></script>
     </body>
 
 </html>
