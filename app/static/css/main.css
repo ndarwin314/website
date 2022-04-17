@@ -6,11 +6,53 @@ body {
     text-align: left;
     box-sizing: content-box;
     padding: 5rem 0;
-    text-align: left;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+select {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #2C2F33;
+    color: #97A9B4;
+}
+
+input {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #2C2F33;
+    color: #97A9B4;
+}
+
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
 }
 

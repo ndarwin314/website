@@ -1,0 +1,50 @@
+{% extends "index.html" %}
+
+
+{% block content %}
+    <form action="/weapon" method="POST">
+        <p>
+            Current Pity:
+            <input type=number name="pity" id="pity" min="0" max="90" value={{pity}}>
+        </p>
+        <p>
+            Last 5* Weapon Was Rate Up:
+            <select name="guarantee">
+                {% if guarantee=="False" %}
+                <option value="False" selected> No</option>
+                <option value="True"> Yes</option>
+                {% else %}
+                <option value="False"> No</option>
+                <option value="True" selected> Yes</option>
+                {% endif %}
+            </select>
+        </p>
+        <p>
+            Number of Primogems:
+            <input type=number id="primo" name="primo" min="0" maxlength="6" value={{primo}}>
+        </p>
+        <p>
+            Number of Genesis Crystals:
+            <input type=number id="crystal" name="crystal" min="0" maxlength="6" value={{crystal}}>
+        </p>
+        <p>
+            Number of Intertwined Fate:
+            <input type=number name="fate" id="fate" min="0" maxlength="6" value={{fate}}>
+        </p>
+        <p><input type = "submit" value = "Submit" /></p>
+    </form>
+    {% if results %}
+        <table>
+            <tr>
+                <th>Refinement</th>
+                <th>Probability</th>
+            </tr>
+            {% for p in results%}
+                <tr>
+                    <td>{{loop.index0 + 1}}</td>
+                    <td>{{p}}%</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

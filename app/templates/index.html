@@ -5,33 +5,23 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     </head>
     <body >
-        <form action="/" method = "POST">
-            <p>
-                Current Pity:
-                <input type=number name="pity" id="pity" min="0" max="90" value={{pity}}>
-            </p>
-            <p>
-                Guarantee:
-                <select name="guarantee">
-                    {% if guarantee=="False" %}
-                    <option value="False" selected> 50/50</option>
-                    <option value="True"> Guarantee</option>
-                    {% else %}
-                    <option value="False"> 50/50</option>
-                    <option value="True" selected> Guarantee</option>
-                    {% endif %}
-                </select>
-            </p>
-            <p>
-                Number of Primogems:
-                <input type=number id="primo" name="primo" min="0" maxlength="6" value={{primo}}>
-            </p>
-            <p>
-                Number of Intertwined Fate:
-                <input type=number name="fate" id="fate" min="0" maxlength="6" value={{fate}}>
-            </p>
-            <p><input type = "submit" value = "Submit" /></p>
-        </form>
+
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container fluid">
+                <div class="container">
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navabar-nav">
+                            <li>
+                                <a href={{url_for("character")}}>Character</a>
+                            </li>
+                            <li>
+                                <a href="/weapon">Weapon</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
         {% block content %}{% endblock %}
 
     <script src="{{ url_for('static', filename='jquery.js') }}"></script>
