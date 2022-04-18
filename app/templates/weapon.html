@@ -10,12 +10,12 @@
         <p>
             Last 5* Weapon Was Rate Up:
             <select name="guarantee">
-                {% if guarantee=="False" %}
-                <option value="False" selected> No</option>
-                <option value="True"> Yes</option>
+                {% if guarantee==1 %}
+                <option value=0> Yes</option>
+                <option value=1 selected> No</option>
                 {% else %}
-                <option value="False"> No</option>
-                <option value="True" selected> Yes</option>
+                <option value=0 selected> Yes</option>
+                <option value=1> No</option>
                 {% endif %}
             </select>
         </p>

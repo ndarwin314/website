@@ -10,12 +10,12 @@
         <p>
             Guarantee:
             <select name="guarantee">
-                {% if guarantee=="False" %}
-                <option value="False" selected> 50/50</option>
-                <option value="True"> Guarantee</option>
+                {% if guarantee==0 %}
+                <option value=0 selected> 50/50</option>
+                <option value=1> Guarantee</option>
                 {% else %}
-                <option value="False"> 50/50</option>
-                <option value="True" selected> Guarantee</option>
+                <option value=0> 50/50</option>
+                <option value=1 selected> Guarantee</option>
                 {% endif %}
             </select>
         </p>

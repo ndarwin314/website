@@ -5,91 +5,86 @@ from flask_restful import Resource, Api
 import numpy as np
 import bisect
 
+params = ["pity", "primo", "guarantee", "fate", "crystal"]
+
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
 def initial():
     return render_template("index.html")
 
+def arg_parse(args):
+    global params
+    r = {arg: 0 for arg in params}
+    for arg in params:
+        try:
+            r[arg] = int(args[arg])
+        # bad vv
+        except:
+            pass
+    return r
 
 @app.route("/character", methods=["GET", "POST"])
 def character():
+    global params
     if request.method == "GET":
-        if request.args:
-            args = request.args
-            wishes = int(args["primo"]+args["crystal"]) // 160 + int(args["fate"])
-            pity = int(args["pity"])
-            g = True if args['guarantee'] == 'True' else False
-            results = deterministic2(wishes, g, pity)
+        if not request.args:
             return render_template("character.html",
-                                   pity=pity,
-                                   guarantee=args['guarantee'],
-                                   fate=args["fate"],
-                                   primo=args['primo'],
-                                   crystal=args['crystal'],
-                                   results=results)
-        return render_template("character.html", pity=0, guarantee="1", fate=0, primo=0, crystal=0)
+                                   pity=0,
+                                   guarantee=0,
+                                   fate=0,
+                                   primo=0,
+                                   crystal=0)
+        args = arg_parse(request.args)
+        wishes = int(args["primo"]+args["crystal"]) // 160 + int(args["fate"])
+        results = deterministic2(wishes, args["guarantee"], args["pity"])
+        return render_template("character.html",
+                               pity=args["pity"],
+                               guarantee=args["guarantee"],
+                               fate=args["fate"],
+                               primo=args["primo"],
+                               crystal=args["crystal"],
+                               results=results)
     elif request.method == 'POST':
-        # TODO: this is horrible
-        if request.form["primo"] == "":
-            primo = 0
-        else:
-            primo = int(request.form["primo"])
-        if request.form['fate'] == "":
-            fate = 0
-        else:
-            fate = int(request.form['fate'])
-
-        if request.form['crystal'] == "":
-            crystal = 0
-        else:
-            crystal = int(request.form['crystal'])
-        test = request.form["guarantee"]
-        g = True if test == "True" else False
-        pity = 0 if request.form["pity"] == "" else int(request.form["pity"])
-        wishes = int((primo + crystal) // 160 + fate)
-        results = deterministic2(wishes, g, pity)
-        return render_template('character.html', pity=pity, guarantee=g, primo=primo, fate=fate, crystal=crystal, results=results)
+        r = arg_parse(request.form)
+        return redirect(
+            url_for('character',
+                    pity=r["pity"],
+                    guarantee=r["guarantee"],
+                    fate=r["fate"],
+                    primo=r["primo"],
+                    crystal=r["crystal"]))
 
 # TODO reusing this much code is definitely poor design but idgaf rn
 @app.route("/weapon", methods=["GET", "POST"])
 def weapon():
     if request.method == "GET":
-        if request.args:
-            args = request.args
-            wishes = int(args["primo"]+args["crystal"]) // 160 + int(args["fate"])
-            pity = int(args["pity"])
-            g = True if args['guarantee'] == 'True' else False
-            results = deterministic2(wishes, g, pity)
+        if not request.args:
             return render_template("weapon.html",
-                                   pity=pity,
-                                   guarantee=args['guarantee'],
-                                   fate=args["fate"],
-                                   primo=args['primo'],
-                                   crystal=args['crystal'],
-                                   results=results)
-        return render_template("weapon.html", pity=0, guarantee="1", fate=0, primo=0, crystal=0)
+                                   pity=0,
+                                   guarantee=0,
+                                   fate=0,
+                                   primo=0,
+                                   crystal=0)
+        args = arg_parse(request.args)
+        wishes = int(args["primo"] + args["crystal"]) // 160 + int(args["fate"])
+        results = deterministic2(wishes, args["guarantee"], args["pity"])
+        return render_template("weapon.html",
+                               pity=args["pity"],
+                               guarantee=args["guarantee"],
+                               fate=args["fate"],
+                               primo=args["primo"],
+                               crystal=args["crystal"],
+                               results=results)
     elif request.method == 'POST':
-        # TODO: this is horrible
-        if request.form["primo"] == "":
-            primo = 0
-        else:
-            primo = int(request.form["primo"])
-        if request.form['fate'] == "":
-            fate = 0
-        else:
-            fate = int(request.form['fate'])
-
-        if request.form['crystal'] == "":
-            crystal = 0
-        else:
-            crystal = int(request.form['crystal'])
-        test = request.form["guarantee"]
-        g = True if test == "True" else False
-        pity = 0 if request.form["pity"] == "" else int(request.form["pity"])
-        wishes = int((primo + crystal) // 160 + fate)
-        results = weaponCalc(wishes, g, pity)
-        return render_template('weapon.html', pity=pity, guarantee=g, primo=primo, fate=fate, crystal=crystal, results=results)
+        r = arg_parse(request.form)
+        return redirect(
+            url_for('weapon',
+                    pity=r["pity"],
+                    guarantee=r["guarantee"],
+                    fate=r["fate"],
+                    primo=r["primo"],
+                    crystal=r["crystal"]))
 
 
 """@app.route("/webservice")
