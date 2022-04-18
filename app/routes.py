@@ -160,7 +160,7 @@ def weaponCalc(wishes=0, guarantee=True, pity=0):
     fullPDF = 23 / 64 * triplePDF
     fullPDF[0:81] += 3/8*basePDF
     fullPDF[0:161] += 17/64*doublePDF
-    pityPDF = np.zeros((81,))
+    pityPDF = np.zeros((81-pity,))
     pityPDF[0] = 0
     initialPDF = np.zeros((241-pity,))
     for i in range(1, 81 - pity):
