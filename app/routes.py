@@ -135,13 +135,9 @@ def deterministic(constellations=0, wishes=0, guarantee=False, pity=0):
         return 100
     return f"{100*fullPDF.cumsum()[wishes]:.2f}"
 
-def toPercent(num):
-    if num == 1:
-        return "100"
-    return f"{100*num:.2f}"
 
 def cumulative(array, index):
-    if index > array.size:
+    if index >= array.size:
         return 100
     return f"{100*array.cumsum()[index]:.2f}"
 
