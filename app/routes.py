@@ -68,7 +68,7 @@ def weapon():
                                    crystal=0)
         args = arg_parse(request.args)
         wishes = int(args["primo"] + args["crystal"]) // 160 + int(args["fate"])
-        results = deterministic2(wishes, args["guarantee"], args["pity"])
+        results = weaponCalc(wishes, args["guarantee"], args["pity"])
         return render_template("weapon.html",
                                pity=args["pity"],
                                guarantee=args["guarantee"],
